@@ -12,7 +12,7 @@
       --brand-navy: #0d2d5e;
       --brand-teal: #2897b8;
       --brand-sky: #aed9ec;
-      --brand-bg: #faf7f0;
+      --brand-bg: #f8fafc;
       --card-bg: #ffffff;
       --text-main: #0f172a;
       --text-muted: #526071;
@@ -29,8 +29,8 @@
     body {
       background-color: var(--brand-bg);
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(40, 151, 184, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(13, 45, 94, 0.10) 0%, transparent 45%);
+        radial-gradient(circle at 10% 20%, rgba(40, 151, 184, 0.10) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(13, 45, 94, 0.08) 0%, transparent 45%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -44,7 +44,7 @@
       max-width: 420px;
       border-radius: 24px;
       padding: 32px 24px;
-      box-shadow: 0 15px 35px -5px rgba(13, 45, 94, 0.12), 0 0 1px 1px rgba(13, 45, 94, 0.05);
+      box-shadow: 0 15px 35px -5px rgba(13, 45, 94, 0.10), 0 0 1px 1px rgba(13, 45, 94, 0.05);
       border-top: 5px solid var(--brand-navy);
       text-align: center;
     }
@@ -53,20 +53,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
-    .logo-container {
-      width: 80px;
-      height: 80px;
+    .brand-logo-img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
       margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      filter: drop-shadow(0 4px 6px rgba(13, 45, 94, 0.08));
     }
 
     .brand-title {
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 800;
       color: var(--brand-navy);
       letter-spacing: -0.3px;
@@ -160,7 +159,7 @@
       transform: none;
     }
 
-    /* Pass Design */
+    /* Token Pass Card */
     .token-box {
       display: none;
       animation: fadeIn 0.3s ease;
@@ -222,26 +221,8 @@
   <div class="container">
     <!-- Brand Header -->
     <div class="brand-section">
-      <div class="logo-container">
-        <!-- SVG recreation of the official shield & plant logo -->
-        <svg viewBox="0 0 200 220" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <!-- Top Right Arc (Teal) -->
-          <path d="M 75,32 L 146,32 C 158,45 174,68 174,90 L 138,103 C 138,88 126,70 114,64 L 75,64 Z" fill="#2897b8"/>
-          <!-- Top Left Arc (Sky Blue) -->
-          <path d="M 69,39 C 45,50 26,80 26,115 C 33,138 45,158 56,172 L 81,148 C 73,135 64,116 64,96 L 69,39 Z" fill="#aed9ec"/>
-          <!-- Main Bottom Shield (Navy Blue) -->
-          <path d="M 60,180 L 100,210 L 174,136 L 140,86 L 118,172 L 78,172 Z" fill="#0d2d5e"/>
-          <!-- Center Coins -->
-          <rect x="74" y="112" width="52" height="13" rx="6.5" fill="#0d2d5e"/>
-          <rect x="74" y="128" width="52" height="13" rx="6.5" fill="#0d2d5e"/>
-          <rect x="74" y="144" width="52" height="13" rx="6.5" fill="#0d2d5e"/>
-          <!-- Plant Stem & Leaves -->
-          <path d="M 100,112 C 100,90 99,75 101,65 C 105,78 124,78 125,98 C 117,99 107,96 102,100" fill="#0d2d5e"/>
-          <path d="M 100,82 C 90,65 72,70 70,85 C 80,90 94,88 100,82 Z" fill="#0d2d5e"/>
-          <!-- Growth Arrow -->
-          <path d="M 125,93 L 134,80 L 136,89 L 144,87 L 138,72 L 123,78 L 129,81 Z" fill="#0d2d5e"/>
-        </svg>
-      </div>
+      <!-- Direct clean logo reference (fallback to logo.png in your repo) -->
+      <img src="logo.png" alt="Triveda Broking Logo" class="brand-logo-img" id="companyLogo" onerror="useFallbackLogo(this)">
       <h1 class="brand-title">Triveda Broking<br>Pvt. Ltd.</h1>
       <p class="brand-tagline">Beyond Broking Building Legacies</p>
     </div>
@@ -307,6 +288,13 @@
   </div>
 
   <script>
+    // Fallback: in case you don't upload logo.png, loads your official high-res logo from cloud
+    function useFallbackLogo(img) {
+      img.onerror = null;
+      // High-resolution clean logo shield fallback
+      img.src = "https://raw.githubusercontent.com/trivedabroking/V/main/logo.png";
+    }
+
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEzD-ECgIhs0Eq2TXrudfNkn7KmeDDhC-hZ-Bvp-3w9XCYSYiCCiw6WkD18bpjEzMq/exec";
 
     function handleCheckIn(e) {
