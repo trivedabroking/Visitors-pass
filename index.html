@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triveda Broking - Visitor Pass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #2563eb;
+      --accent-glow: rgba(37, 99, 235, 0.15);
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg-gradient); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px 14px; }
+    .card { background: var(--card-bg); width: 100%; max-width: 420px; border-radius: 24px; padding: 34px 26px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+    .brand-header { text-align: center; margin-bottom: 24px; }
+    .brand-pill { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent); background: #eff6ff; padding: 6px 14px; border-radius: 99px; margin-bottom: 12px; }
+    .brand-header h1 { font-size: 21px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+    .brand-header p { font-size: 13px; color: var(--muted); margin-top: 5px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    input, select { width: 100%; padding: 13px 15px; font-size: 15px; border-radius: 12px; border: 1.5px solid var(--border); outline: none; transition: all 0.2s; background: #f8fafc; color: var(--text); }
+    input:focus, select:focus { border-color: var(--accent); background: #ffffff; box-shadow: 0 0 0 4px var(--accent-glow); }
+    button { width: 100%; padding: 15px; background: var(--accent); color: #ffffff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
+    button:hover { background: #1d4ed8; }
+    button:disabled { background: #93c5fd; cursor: not-allowed; }
+    .token-card { display: none; text-align: center; animation: popIn 0.3s ease; }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+    .pass-container { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 18px; padding: 24px 16px; margin: 20px 0; }
+    .pass-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+    .pass-number { font-size: 58px; font-weight: 800; color: var(--accent); line-height: 1.1; margin: 10px 0; letter-spacing: 1px; }
+    .waiting-note { font-size: 14px; color: var(--muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div id="formView">
+      <div class="brand-header">
+        <div class="brand-pill">Reception Desk</div>
+        <h1>Triveda Broking Pvt. Ltd.</h1>
+        <p>Complete your details to receive your visitor pass</p>
+      </div>
+
+      <form id="checkInForm" onsubmit="submitVisitor(event)">
+        <div class="form-group">
+          <label>Company Name</label>
+          <input type="text" id="companyName" placeholder="Your company name" required />
+        </div>
+
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="personName" placeholder="Full name" required />
+        </div>
+
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="tel" id="mobileNumber" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required />
+        </div>
+
+        <div class="form-group">
+          <label>Scheduled By (Tele Caller Name)</label>
+          <select id="scheduledBy" required>
+            <option value="" disabled selected>Choose telecaller...</option>
+            <option value="FAIZ">FAIZ</option>
+            <option value="RAHIM">RAHIM</option>
+            <option value="REHMAN">REHMAN</option>
+            <option value="NIKHIL">NIKHIL</option>
+            <option value="DAKSH">DAKSH</option>
+            <option value="SAAD">SAAD</option>
+            <option value="AITAL">AITAL</option>
+            <option value="MAHEK">MAHEK</option>
+            <option value="DIRECT / WALK-IN">DIRECT / WALK-IN</option>
+          </select>
+        </div>
+
+        <button type="submit" id="btnSubmit">Generate Visitor Pass</button>
+      </form>
+    </div>
+
+    <div id="successView" class="token-card">
+      <div class="brand-header">
+        <div class="brand-pill" style="background: #dcfce7; color: #15803d;">✓ Registered</div>
+        <h1>Triveda Broking Pvt. Ltd.</h1>
+      </div>
+
+      <div class="pass-container">
+        <div class="pass-label">Visitor Token Number</div>
+        <div class="pass-number" id="passNumberDisplay">---</div>
+        <div class="pass-label">Please keep this pass handy</div>
+      </div>
+
+      <p class="waiting-note">Please take a seat in our reception lounge. Our team has been notified of your arrival.</p>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyEzD-ECgIhs0Eq2TXrudfNkn7KmeDDhC-hZ-Bvp-3w9XCYSYiCCiw6WkD18bpjEzMq/exec';
+
+    function submitVisitor(e) {
+      e.preventDefault();
+      const btn = document.getElementById("btnSubmit");
+      btn.disabled = true;
+      btn.innerText = "Generating Pass...";
+
+      const payload = {
+        companyName: document.getElementById("companyName").value.trim(),
+        personName: document.getElementById("personName").value.trim(),
+        mobileNumber: document.getElementById("mobileNumber").value.trim(),
+        scheduledBy: document.getElementById("scheduledBy").value
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          document.getElementById("formView").style.display = "none";
+          document.getElementById("passNumberDisplay").innerText = data.token;
+          document.getElementById("successView").style.display = "block";
+        } else {
+          alert('Submission error: ' + (data.message || 'Please try again.'));
+          btn.disabled = false;
+          btn.innerText = "Generate Visitor Pass";
+        }
+      })
+      .catch(err => {
+        alert('Submission failed. Please make sure deployment access is set to "Anyone".');
+        btn.disabled = false;
+        btn.innerText = "Generate Visitor Pass";
+      });
+    }
+  </script>
+</body>
+</html>
